@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WellNest - Your Health Routine, Organized</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Chart.js for Interactive Dashboard -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ocean: {
+              50: '#f0f9ff',
+              100: '#e0f2fe',
+              200: '#bae6fd',
+              300: '#7dd3fc',
+              400: '#38bdf8',
+              500: '#0284c7',
+              600: '#0369a1',
+              700: '#075985',
+              800: '#0c4a6e',
+              900: '#0f172a',
+              950: '#090d16',
+            },
+            emeraldLeaf: {
+              50: '#ecfdf5',
+              100: '#d1fae5',
+              200: '#a7f3d0',
+              300: '#6ee7b7',
+              400: '#34d399',
+              500: '#10b981',
+              600: '#059669',
+              700: '#047857',
+              800: '#065f46',
+              900: '#064e3b',
+            }
+          },
+          fontFamily: {
+            sans: ["Outfit", "Plus Jakarta Sans", "sans-serif"],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f0f9ff;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #7dd3fc;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #0284c7;
+    }
+    .glass-card {
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(224, 242, 254, 0.8);
+    }
+    .blue-green-gradient {
+      background: linear-gradient(135deg, #f0f9ff 0%, #ecfdf5 50%, #ffffff 100%);
+    }
+    .hero-glow {
+      background: radial-gradient(circle at 60% 40%, rgba(56, 189, 248, 0.15) 0%, rgba(52, 211, 153, 0.12) 50%, transparent 75%);
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 font-sans antialiased selection:bg-emeraldLeaf-200 selection:text-ocean-900">
+
+  <!-- Announcement Bar -->
+  <div class="bg-gradient-to-r from-ocean-700 via-ocean-600 to-emeraldLeaf-600 text-white text-xs sm:text-sm font-medium py-2.5 px-4 text-center flex items-center justify-center gap-2 shadow-sm">
+    <span class="bg-white/20 text-white text-[11px] uppercase px-2.5 py-0.5 rounded-full font-bold tracking-wider">SDG 3 Aligned</span>
+    <span>Supporting Good Health & Well-Being for Students & Communities</span>
+    <a href="#prototype" class="underline hover:text-emeraldLeaf-200 transition-colors hidden sm:inline ml-1 font-semibold">View our Prototype &rarr;</a>
+  </div>
+
+  <!-- Navigation Header -->
+  <header class="sticky top-0 z-50 glass-card transition-all duration-300 border-b border-ocean-100" id="navbar">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      <!-- Brand Logo -->
+      <a href="#home" class="flex items-center gap-2.5 group">
+        <div class="w-11 h-11 rounded-2xl overflow-hidden flex items-center justify-center shadow-md group-hover:scale-105 transition-transform duration-300 bg-white border border-slate-100 p-1 shrink-0">
+          <img src="WELLNEST LUGOOO.png" alt="Wellnest Logo" class="w-full h-full object-cover rounded-xl" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+          <div class="hidden w-full h-full bg-gradient-to-br from-ocean-500 to-emeraldLeaf-500 rounded-xl items-center justify-center text-white font-extrabold text-lg">W</div>
+        </div>
+        <div class="flex flex-col">
+          <span class="font-bold text-2xl tracking-tight text-ocean-900 flex items-center leading-none">
+            Well<span class="text-emeraldLeaf-600">Nest</span>
+          </span>
+          <span class="text-[9px] uppercase tracking-widest text-ocean-600 font-bold mt-1">Health Routine Assistant</span>
+        </div>
+      </a>
+
+      <!-- Navigation Links (Promotional Video added next to Home) -->
+      <nav class="hidden md:flex items-center gap-7 text-sm font-semibold text-slate-700">
+        <a href="#home" class="hover:text-ocean-600 transition-colors">Home</a>
+        <a href="#promo-video" class="hover:text-ocean-600 transition-colors flex items-center gap-1.5 text-emeraldLeaf-700">
+          <span>Promotional Video</span>
+        </a>
+        <a href="#prototype" class="hover:text-ocean-600 transition-colors">Our Prototype</a>
+        <a href="#features" class="hover:text-ocean-600 transition-colors">Features</a>
+        <a href="#about" class="hover:text-ocean-600 transition-colors">About Us</a>
+        <a href="#contact" class="hover:text-ocean-600 transition-colors">Contact Us</a>
+      </nav>
+
+      <!-- CTA Buttons -->
+      <div class="hidden sm:flex items-center gap-3">
+        <button onclick="openModal('consultation-modal')" class="text-sm font-semibold text-ocean-700 hover:text-ocean-900 px-4 py-2 rounded-full hover:bg-ocean-50 transition-colors">
+          Sign In
+        </button>
+        <button onclick="openModal('consultation-modal')" class="bg-gradient-to-r from-ocean-600 to-emeraldLeaf-600 hover:from-ocean-700 hover:to-emeraldLeaf-700 text-white text-sm font-semibold px-5 py-2.5 rounded-full shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 flex items-center gap-2">
+          <span>Start Free Trial</span>
+          <i data-lucide="arrow-right" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <button id="mobile-menu-btn" class="md:hidden p-2 text-ocean-900 hover:bg-ocean-50 rounded-xl transition-colors">
+        <i data-lucide="menu" class="w-6 h-6"></i>
+      </button>
+    </div>
+
+    <!-- Mobile Menu Drawer -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-ocean-100 px-6 py-6 shadow-xl">
+      <nav class="flex flex-col gap-4 font-semibold text-slate-800">
+        <a href="#home" class="py-2 border-b border-slate-100" onclick="toggleMobileMenu()">Home</a>
+        <a href="#promo-video" class="py-2 border-b border-slate-100 text-emeraldLeaf-700 flex items-center gap-2" onclick="toggleMobileMenu()">
+          <i data-lucide="play-circle" class="w-4 h-4"></i>
+          <span>Promotional Video</span>
+        </a>
+        <a href="#prototype" class="py-2 border-b border-slate-100" onclick="toggleMobileMenu()">Our Prototype</a>
+        <a href="#features" class="py-2 border-b border-slate-100" onclick="toggleMobileMenu()">Features</a>
+        <a href="#about" class="py-2 border-b border-slate-100" onclick="toggleMobileMenu()">About Us</a>
+        <a href="#contact" class="py-2 border-b border-slate-100" onclick="toggleMobileMenu()">Contact Us</a>
+        <div class="pt-4 flex flex-col gap-3">
+          <button onclick="openModal('consultation-modal'); toggleMobileMenu();" class="w-full bg-gradient-to-r from-ocean-600 to-emeraldLeaf-600 text-white font-bold py-3 rounded-xl shadow text-center">
+            Start Free Trial
+          </button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- HOME SECTION -->
+    <section id="home" class="relative blue-green-gradient pt-12 lg:pt-16 pb-20 overflow-hidden">
+      <div class="absolute inset-0 hero-glow pointer-events-none"></div>
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+          <!-- Left Hero Content -->
+          <div class="lg:col-span-7 text-center lg:text-left">
+            <div class="inline-flex items-center gap-2 bg-white border border-ocean-200 text-ocean-700 rounded-full px-4 py-1.5 text-xs font-bold uppercase tracking-wider mb-6 shadow-sm">
+              <i data-lucide="heart-pulse" class="w-4 h-4 text-emeraldLeaf-500"></i>
+              Supports your daily routine
+            </div>
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-ocean-900 leading-[1.15]">
+              WellNest: <span class="bg-gradient-to-r from-ocean-600 via-emeraldLeaf-600 to-emeraldLeaf-500 bg-clip-text text-transparent">Your Health Routine, Organized.</span>
+            </h1>
+            <p class="mt-6 text-lg sm:text-xl text-slate-600 max-w-2xl mx-auto lg:mx-0 font-normal leading-relaxed">
+              A digital health and wellness assistant that helps you organize and improve your everyday health routines, medication reminders, appointments, and habits in one simple platform.
+            </p>
+            <div class="mt-8 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+              <a href="#prototype" class="w-full sm:w-auto bg-gradient-to-r from-ocean-600 to-emeraldLeaf-600 hover:from-ocean-700 hover:to-emeraldLeaf-700 text-white font-bold px-8 py-4 rounded-full shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center gap-3">
+                <span>Try Our Prototype</span>
+                <i data-lucide="sparkles" class="w-5 h-5"></i>
+              </a>
+              <a href="#promo-video" class="w-full sm:w-auto bg-white hover:bg-ocean-50 text-ocean-800 font-bold px-7 py-4 rounded-full border border-ocean-200 shadow-sm transition-all duration-200 flex items-center justify-center gap-2">
+                <i data-lucide="play-circle" class="w-5 h-5 text-emeraldLeaf-600"></i>
+                <span>Watch Promo Video</span>
+              </a>
+            </div>
+            <!-- Highlights Banner -->
+            <div class="mt-12 pt-8 border-t border-ocean-200/80 grid grid-cols-3 gap-4 text-left">
+              <div>
+                <div class="text-2xl font-extrabold text-ocean-900">100%</div>
+                <div class="text-xs text-slate-500 font-semibold">Organized Routine</div>
+              </div>
+              <div>
+                <div class="text-2xl font-extrabold text-emeraldLeaf-600">SDG 3</div>
+                <div class="text-xs text-slate-500 font-semibold">Global Health Goal</div>
+              </div>
+              <div>
+                <div class="text-2xl font-extrabold text-ocean-900">24/7</div>
+                <div class="text-xs text-slate-500 font-semibold">Smart Reminders</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Hero iPhone Size Mockup -->
+          <div class="lg:col-span-5 relative flex justify-center lg:justify-end">
+            <div class="relative w-full max-w-[300px] sm:max-w-[315px]">
+              <div class="absolute -inset-4 bg-gradient-to-tr from-ocean-300/30 to-emeraldLeaf-300/30 rounded-[3.5rem] blur-xl pointer-events-none"></div>
+              <div class="relative bg-[#111827] rounded-[3.2rem] p-[10px] shadow-[0_25px_60px_-15px_rgba(15,23,42,0.35)] border-[3px] border-slate-800">
+                <div class="w-1 h-9 bg-slate-800 rounded-l-md absolute -left-[5px] top-28"></div>
+                <div class="w-1 h-12 bg-slate-800 rounded-l-md absolute -left-[5px] top-40"></div>
+                <div class="w-1 h-14 bg-slate-800 rounded-r-md absolute -right-[5px] top-36"></div>
+                <div class="bg-[#F8FAFC] rounded-[2.7rem] overflow-hidden flex flex-col justify-between text-slate-900 select-none">
+                  <div class="px-6 pt-3 pb-2 flex items-center justify-between text-[11px] font-bold text-slate-900">
+                    <span>9:41</span>
+                    <div class="w-24 h-6 bg-[#0F172A] rounded-full flex items-center justify-end pr-2">
+                      <div class="w-2 h-2 rounded-full bg-slate-800 border border-slate-700"></div>
+                    </div>
+                    <div class="flex items-center gap-1.5">
+                      <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M2 22h20V2z"/></svg>
+                      <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+                      <div class="w-5 h-2.5 border border-slate-900 rounded-[3px] p-[1px] flex items-center">
+                        <div class="w-full h-full bg-slate-900 rounded-[1px]"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="px-5 pt-2 pb-3 space-y-3.5 text-left">
+                    <div>
+                      <h2 class="text-[20px] font-extrabold text-slate-900 tracking-tight leading-tight">Good morning, Maria</h2>
+                      <p class="text-[10px] font-bold text-slate-500 tracking-wider uppercase mt-0.5">Saturday, 14 NOVEMBER</p>
+                    </div>
+                    <div class="bg-[#ECF4DF] rounded-2xl p-3.5 flex items-center justify-between shadow-sm border border-[#DCEAC7]">
+                      <div class="space-y-1">
+                        <h3 class="text-[13px] font-extrabold text-slate-900 leading-snug">A little care goes a<br>long way.</h3>
+                        <p class="text-[11px] text-slate-600 font-medium">Your daily checklist</p>
+                        <a href="#prototype" class="inline-flex items-center gap-1 text-[11px] font-bold text-[#4D7C0F] hover:underline pt-0.5">
+                          <span>Keep going</span>
+                          <span>&rarr;</span>
+                        </a>
+                      </div>
+                      <div class="relative w-14 h-14 flex items-center justify-center shrink-0">
+                        <svg class="w-full h-full -rotate-90" viewBox="0 0 36 36">
+                          <circle cx="18" cy="18" r="14.5" fill="none" stroke="#D5E5BE" stroke-width="3.2"></circle>
+                          <circle cx="18" cy="18" r="14.5" fill="none" stroke="#84CC16" stroke-width="3.2" stroke-dasharray="45.5 100" stroke-linecap="round"></circle>
+                        </svg>
+                        <span class="absolute text-[12px] font-extrabold text-slate-900">2 <span class="text-[9px] font-semibold text-slate-500">/4</span></span>
+                      </div>
+                    </div>
+                    <div class="space-y-2">
+                      <h4 class="text-[13px] font-extrabold text-slate-900">Coming up today</h4>
+                      <a href="#prototype" class="block bg-white rounded-2xl p-3 shadow-sm border border-slate-100 hover:border-ocean-200 transition-colors flex items-center justify-between">
+                        <div>
+                          <div class="text-[12px] font-bold text-slate-900">30-minute walk</div>
+                          <div class="text-[10px] text-slate-500 mt-0.5">5:30 PM &middot; Health activity</div>
+                        </div>
+                        <i data-lucide="chevron-right" class="w-4 h-4 text-ocean-600"></i>
+                      </a>
+                      <a href="#prototype" class="block bg-[#EBF5FA] rounded-2xl p-3 shadow-sm border border-[#D8ECF7] hover:border-ocean-300 transition-colors flex items-center justify-between">
+                        <div>
+                          <div class="text-[12px] font-bold text-slate-900">Health Check-up</div>
+                          <div class="text-[10px] text-slate-600 mt-0.5">Friday &middot; 9:00 AM &middot; Panabo City</div>
+                        </div>
+                        <i data-lucide="chevron-right" class="w-4 h-4 text-ocean-600"></i>
+                      </a>
+                    </div>
+                    <div class="grid grid-cols-3 gap-2 pt-0.5">
+                      <button onclick="openModal('consultation-modal')" class="bg-[#0EA5E9] hover:bg-[#0284C7] text-slate-900 font-extrabold text-[11px] py-2 rounded-xl shadow-sm transition-colors">Reminder</button>
+                      <button onclick="openModal('consultation-modal')" class="bg-[#E6F0D6] hover:bg-[#D9E8C3] text-slate-900 font-extrabold text-[11px] py-2 rounded-xl shadow-sm transition-colors">+ Visit</button>
+                      <a href="#contact" class="bg-white hover:bg-slate-100 text-slate-900 font-extrabold text-[11px] py-2 rounded-xl shadow-sm border border-slate-100 text-center transition-colors">Contacts</a>
+                    </div>
+                    <p class="text-[9px] text-slate-400 text-center">Not diagnostic. For health concerns, ask a doctor.</p>
+                  </div>
+                  <div class="bg-white border-t border-slate-100 px-2 pt-2 pb-2 text-center">
+                    <div class="grid grid-cols-5 items-center">
+                      <div class="flex flex-col items-center justify-center bg-[#E0F2FE] text-[#0284C7] rounded-xl py-1.5 mx-0.5">
+                        <i data-lucide="home" class="w-4 h-4"></i>
+                        <span class="text-[9px] font-bold mt-0.5">Home</span>
+                      </div>
+                      <div class="flex flex-col items-center justify-center text-slate-500 py-1.5">
+                        <i data-lucide="bell" class="w-4 h-4"></i>
+                        <span class="text-[9px] font-medium mt-0.5">Reminders</span>
+                      </div>
+                      <div class="flex flex-col items-center justify-center text-slate-500 py-1.5">
+                        <i data-lucide="book-open" class="w-4 h-4"></i>
+                        <span class="text-[9px] font-medium mt-0.5">Hub</span>
+                      </div>
+                      <div class="flex flex-col items-center justify-center text-slate-500 py-1.5">
+                        <i data-lucide="bar-chart-2" class="w-4 h-4"></i>
+                        <span class="text-[9px] font-medium mt-0.5">Progress</span>
+                      </div>
+                      <div class="flex flex-col items-center justify-center text-slate-500 py-1.5">
+                        <i data-lucide="user" class="w-4 h-4"></i>
+                        <span class="text-[9px] font-medium mt-0.5">Profile</span>
+                      </div>
+                    </div>
+                    <div class="w-28 h-1 bg-slate-900 rounded-full mx-auto mt-2"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROMOTIONAL VIDEO SECTION (Auto-plays when run) -->
+    <section id="promo-video" class="py-20 bg-white border-t border-ocean-100">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-3xl mx-auto mb-10">
+          <span class="text-xs font-bold text-emeraldLeaf-700 tracking-wider uppercase bg-emeraldLeaf-50 px-3.5 py-1 rounded-full border border-emeraldLeaf-200">
+            Official Showcase
+          </span>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-ocean-900 mt-3 tracking-tight">
+            WellNest Promotional Video
+          </h2>
+          <p class="text-slate-600 mt-2 text-base">
+            See how WellNest helps students and busy individuals simplify medication reminders, check-ups, and daily wellness habits.
+          </p>
+        </div>
+
+        <!-- Video Player Container -->
+        <div class="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-ocean-100 bg-ocean-950 aspect-video group">
+          <video 
+            id="wellnest-promo-player"
+            class="w-full h-full object-cover"
+            autoplay 
+            muted 
+            loop 
+            playsinline 
+            controls
+          >
+            <!-- Replace 'promo-video.mp4' with your own local video file name -->
+            <source src="Wellnest.mp4" type="video/mp4">
+            <!-- Fallback sample video so it immediately plays when run -->
+            <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+
+          <!-- Unmute Helper Badge -->
+          <button 
+            id="unmute-btn"
+            onclick="toggleMuteVideo()" 
+            class="absolute top-4 right-4 bg-ocean-900/80 hover:bg-ocean-900 text-white text-xs font-bold px-3.5 py-2 rounded-full backdrop-blur-md border border-white/20 flex items-center gap-1.5 shadow-lg transition-all"
+          >
+            <i data-lucide="volume-x" id="volume-icon" class="w-4 h-4 text-emeraldLeaf-400"></i>
+            <span id="volume-text">Click to Unmute</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- OUR PROTOTYPE SECTION (12 iPhone Frame Image Slots) -->
+    <section id="prototype" class="py-20 bg-gradient-to-b from-ocean-50 via-emeraldLeaf-50/40 to-white border-y border-ocean-100 relative">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-3xl mx-auto mb-16">
+          <span class="text-xs font-bold text-ocean-800 tracking-wider uppercase bg-ocean-100 px-3.5 py-1 rounded-full border border-ocean-200">Interactive Web App & Prototype</span>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-ocean-900 mt-3 tracking-tight">Our Prototype</h2>
+          <p class="text-slate-600 mt-2 text-base">Explore our mobile app screen states and interactive views across 12 dedicated prototype screens.</p>
+        </div>
+
+        <!-- 12 iPhone Mockup Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          <!-- Prototype Screen 1 -->
+          <div class="flex flex-col items-center">
+            <div class="relative w-full max-w-[270px]">
+              <div class="absolute -inset-2 bg-gradient-to-tr from-ocean-300/20 to-emeraldLeaf-300/20 rounded-[3rem] blur-lg pointer-events-none"></div>
+              <div class="relative bg-[#111827] rounded-[3rem] p-[9px] shadow-xl border-[3px] border-slate-800">
+                <div class="w-1 h-8 bg-slate-800 rounded-l-md absolute -left-[5px] top-24"></div>
+                <div class="w-1 h-10 bg-slate-800 rounded-l-md absolute -left-[5px] top-36"></div>
+                <div class="w-1 h-12 bg-slate-800 rounded-r-md absolute -right-[5px] top-32"></div>
+                <div class="bg-[#F8FAFC] rounded-[2.5rem] overflow-hidden aspect-[9/19.5] flex items-center justify-center relative">
+                  <img src="Landing page.png" alt="Prototype Screen 1" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1555774698-0b77e0d5fac6?auto=format&fit=crop&w=600&q=80'">
+                </div>
+              </div>
+            </div>
+            <span class="mt-4 font-bold text-sm text-ocean-900">1. Landing Page</span>
+          </div>
+
+          <!-- Prototype Screen 2 -->
+          <div class="flex flex-col items-center">
+            <div class="relative w-full max-w-[270px]">
+              <div class="absolute -inset-2 bg-gradient-to-tr from-ocean-300/20 to-emeraldLeaf-300/20 rounded-[3rem] blur-lg pointer-events-none"></div>
+              <div class="relative bg-[#111827] rounded-[3rem] p-[9px] shadow-xl border-[3px] border-slate-800">
+                <div class="w-1 h-8 bg-slate-800 rounded-l-md absolute -left-[5px] top-24"></div>
+                <div class="w-1 h-10 bg-slate-800 rounded-l-md absolute -left-[5px] top-36"></div>
+                <div class="w-1 h-12 bg-slate-800 rounded-r-md absolute -right-[5px] top-32"></div>
+                <div class="bg-[#F8FAFC] rounded-[2.5rem] overflow-hidden aspect-[9/19.5] flex items-center justify-center relative">
+                  <img src="Login page.png" alt="Prototype Screen 2" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=600&q=80'">
+                </div>
+              </div>
+            </div>
+            <span class="mt-4 font-bold text-sm text-ocean-900">2. Login Page</span>
+          </div>
+
+          <!-- Prototype Screen 3 -->
+          <div class="flex flex-col items-center">
+            <div class="relative w-full max-w-[270px]">
+              <div class="absolute -inset-2 bg-gradient-to-tr from-ocean-300/20 to-emeraldLeaf-300/20 rounded-[3rem] blur-lg pointer-events-none"></div>
+              <div class="relative bg-[#111827] rounded-[3rem] p-[9px] shadow-xl border-[3px] border-slate-800">
+                <div class="w-1 h-8 bg-slate-800 rounded-l-md absolute -left-[5px] top-24"></div>
+                <div class="w-1 h-10 bg-slate-800 rounded-l-md absolute -left-[5px] top-36"></div>
+                <div class="w-1 h-12 bg-slate-800 rounded-r-md absolute -right-[5px] top-32"></div>
+                <div class="bg-[#F8FAFC] rounded-[2.5rem] overflow-hidden aspect-[9/19.5] flex items-center justify-center relative">
+                  <img src="Dashboard.png" alt="Prototype Screen 3" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=600&q=80'">
+                </div>
+              </div>
+            </div>
+            <span class="mt-4 font-bold text-sm text-ocean-900">3. Main Dashboard</span>
+          </div>
+
+          <!-- Prototype Screen 4 -->
+          <div class="flex flex-col items-center">
+            <div class="relative w-full max-w-[270px]">
+              <div class="absolute -inset-2 bg-gradient-to-tr from-ocean-300/20 to-emeraldLeaf-300/20 rounded-[3rem] blur-lg pointer-events-none"></div>
+              <div class="relative bg-[#111827] rounded-[3rem] p-[9px] shadow-xl border-[3px] border-slate-800">
+                <div class="w-1 h-8 bg-slate-800 rounded-l-md absolute -left-[5px] top-24"></div>
+                <div class="w-1 h-10 bg-slate-800 rounded-l-md absolute -left-[5px] top-36"></div>
+                <div class="w-1 h-12 bg-slate-800 rounded-r-md absolute -right-[5px] top-32"></div>
+                <div class="bg-[#F8FAFC] rounded-[2.5rem] overflow-hidden aspect-[9/19.5] flex items-center justify-center relative">
+                  <img src="Reminders.png" alt="Prototype Screen 4" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=600&q=80'">
+                </div>
+              </div>
+            </div>
+            <span class="mt-4 font-bold text-sm text-ocean-900">4. Appointment Scheduler</span>
+          </div>
+
+          <!-- Prototype Screen 5 -->
+          <div class="flex flex-col items-center">
+            <div class="relative w-full max-w-[270px]">
+              <div class="absolute -inset-2 bg-gradient-to-tr from-ocean-300/20 to-emeraldLeaf-300/20 rounded-[3rem] blur-lg pointer-events-none"></div>
+              <div class="relative bg-[#111827] rounded-[3rem] p-[9px] shadow-xl border-[3px] border-slate-800">
+                <div class="w-1 h-8 bg-slate-800 rounded-l-md absolute -left-[5px] top-24"></div>
+                <div class="w-1 h-10 bg-slate-800 rounded-l-md absolute -left-[5px] top-36"></div>
+                <div class="w-1 h-12 bg-slate-800 rounded-r-md absolute -right-[5px] top-32"></div>
+                <div class="bg-[#F8FAFC] rounded-[2.5rem] overflow-hidden aspect-[9/19.5] flex items-center justify-center relative">
+                  <img src="Add reminder.png" alt="Prototype Screen 5" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?auto=format&fit=crop&w=600&q=80'">
+                </div>
+              </div>
+            </div>
+            <span class="mt-4 font-bold text-sm text-ocean-900">5. Add Reminder</span>
+          </div>
+
+          <!-- Prototype Screen 6 -->
+          <div class="flex flex-col items-center">
+            <div class="relative w-full max-w-[270px]">
+              <div class="absolute -inset-2 bg-gradient-to-tr from-ocean-300/20 to-emeraldLeaf-300/20 rounded-[3rem] blur-lg pointer-events-none"></div>
+              <div class="relative bg-[#111827] rounded-[3rem] p-[9px] shadow-xl border-[3px] border-slate-800">
+                <div class="w-1 h-8 bg-slate-800 rounded-l-md absolute -left-[5px] top-24"></div>
+                <div class="w-1 h-10 bg-slate-800 rounded-l-md absolute -left-[5px] top-36"></div>
+                <div class="w-1 h-12 bg-slate-800 rounded-r-md absolute -right-[5px] top-32"></div>
+                <div class="bg-[#F8FAFC] rounded-[2.5rem] overflow-hidden aspect-[9/19.5] flex items-center justify-center relative">
+                  <img src="Health Hub.png" alt="Prototype Screen 6" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=80'">
+                </div>
+              </div>
+            </div>
+            <span class="mt-4 font-bold text-sm text-ocean-900">6. Health Hub</span>
+          </div>
+
+          <!-- Prototype Screen 7 -->
+          <div class="flex flex-col items-center">
+            <div class="relative w-full max-w-[270px]">
+              <div class="absolute -inset-2 bg-gradient-to-tr from-ocean-300/20 to-emeraldLeaf-300/20 rounded-[3rem] blur-lg pointer-events-none"></div>
+              <div class="relative bg-[#111827] rounded-[3rem] p-[9px] shadow-xl border-[3px] border-slate-800">
+                <div class="w-1 h-8 bg-slate-800 rounded-l-md absolute -left-[5px] top-24"></div>
+                <div class="w-1 h-10 bg-slate-800 rounded-l-md absolute -left-[5px] top-36"></div>
+                <div class="w-1 h-12 bg-slate-800 rounded-r-md absolute -right-[5px] top-32"></div>
+                <div class="bg-[#F8FAFC] rounded-[2.5rem] overflow-hidden aspect-[9/19.5] flex items-center justify-center relative">
+                  <img src="Progress.png" alt="Prototype Screen 7" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=600&q=80'">
+                </div>
+              </div>
+            </div>
+            <span class="mt-4 font-bold text-sm text-ocean-900">7. Progress</span>
+          </div>
+
+          <!-- Prototype Screen 8 -->
+          <div class="flex flex-col items-center">
+            <div class="relative w-full max-w-[270px]">
+              <div class="absolute -inset-2 bg-gradient-to-tr from-ocean-300/20 to-emeraldLeaf-300/20 rounded-[3rem] blur-lg pointer-events-none"></div>
+              <div class="relative bg-[#111827] rounded-[3rem] p-[9px] shadow-xl border-[3px] border-slate-800">
+                <div class="w-1 h-8 bg-slate-800 rounded-l-md absolute -left-[5px] top-24"></div>
+                <div class="w-1 h-10 bg-slate-800 rounded-l-md absolute -left-[5px] top-36"></div>
+                <div class="w-1 h-12 bg-slate-800 rounded-r-md absolute -right-[5px] top-32"></div>
+                <div class="bg-[#F8FAFC] rounded-[2.5rem] overflow-hidden aspect-[9/19.5] flex items-center justify-center relative">
+                  <img src="Avail a Premium.png" alt="Prototype Screen 8" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=600&q=80'">
+                </div>
+              </div>
+            </div>
+            <span class="mt-4 font-bold text-sm text-ocean-900">8. Buy Premium</span>
+          </div>
+
+          <!-- Prototype Screen 9 -->
+          <div class="flex flex-col items-center">
+            <div class="relative w-full max-w-[270px]">
+              <div class="absolute -inset-2 bg-gradient-to-tr from-ocean-300/20 to-emeraldLeaf-300/20 rounded-[3rem] blur-lg pointer-events-none"></div>
+              <div class="relative bg-[#111827] rounded-[3rem] p-[9px] shadow-xl border-[3px] border-slate-800">
+                <div class="w-1 h-8 bg-slate-800 rounded-l-md absolute -left-[5px] top-24"></div>
+                <div class="w-1 h-10 bg-slate-800 rounded-l-md absolute -left-[5px] top-36"></div>
+                <div class="w-1 h-12 bg-slate-800 rounded-r-md absolute -right-[5px] top-32"></div>
+                <div class="bg-[#F8FAFC] rounded-[2.5rem] overflow-hidden aspect-[9/19.5] flex items-center justify-center relative">
+                  <img src="Payment.png" alt="Prototype Screen 9" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=600&q=80'">
+                </div>
+              </div>
+            </div>
+            <span class="mt-4 font-bold text-sm text-ocean-900">9. Payment Tracker</span>
+          </div>
+
+          <!-- Prototype Screen 10 -->
+          <div class="flex flex-col items-center">
+            <div class="relative w-full max-w-[270px]">
+              <div class="absolute -inset-2 bg-gradient-to-tr from-ocean-300/20 to-emeraldLeaf-300/20 rounded-[3rem] blur-lg pointer-events-none"></div>
+              <div class="relative bg-[#111827] rounded-[3rem] p-[9px] shadow-xl border-[3px] border-slate-800">
+                <div class="w-1 h-8 bg-slate-800 rounded-l-md absolute -left-[5px] top-24"></div>
+                <div class="w-1 h-10 bg-slate-800 rounded-l-md absolute -left-[5px] top-36"></div>
+                <div class="w-1 h-12 bg-slate-800 rounded-r-md absolute -right-[5px] top-32"></div>
+                <div class="bg-[#F8FAFC] rounded-[2.5rem] overflow-hidden aspect-[9/19.5] flex items-center justify-center relative">
+                  <img src="Premium Dashboard.png" alt="Prototype Screen 10" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=600&q=80'">
+                </div>
+              </div>
+            </div>
+            <span class="mt-4 font-bold text-sm text-ocean-900">10. Premium Dashboard</span>
+          </div>
+
+          <!-- Prototype Screen 11 -->
+          <div class="flex flex-col items-center">
+            <div class="relative w-full max-w-[270px]">
+              <div class="absolute -inset-2 bg-gradient-to-tr from-ocean-300/20 to-emeraldLeaf-300/20 rounded-[3rem] blur-lg pointer-events-none"></div>
+              <div class="relative bg-[#111827] rounded-[3rem] p-[9px] shadow-xl border-[3px] border-slate-800">
+                <div class="w-1 h-8 bg-slate-800 rounded-l-md absolute -left-[5px] top-24"></div>
+                <div class="w-1 h-10 bg-slate-800 rounded-l-md absolute -left-[5px] top-36"></div>
+                <div class="w-1 h-12 bg-slate-800 rounded-r-md absolute -right-[5px] top-32"></div>
+                <div class="bg-[#F8FAFC] rounded-[2.5rem] overflow-hidden aspect-[9/19.5] flex items-center justify-center relative">
+                  <img src="School Dashboard.png" alt="Prototype Screen 11" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=600&q=80'">
+                </div>
+              </div>
+            </div>
+            <span class="mt-4 font-bold text-sm text-ocean-900">11. School Dashboard</span>
+          </div>
+
+          <!-- Prototype Screen 12 -->
+          <div class="flex flex-col items-center">
+            <div class="relative w-full max-w-[270px]">
+              <div class="absolute -inset-2 bg-gradient-to-tr from-ocean-300/20 to-emeraldLeaf-300/20 rounded-[3rem] blur-lg pointer-events-none"></div>
+              <div class="relative bg-[#111827] rounded-[3rem] p-[9px] shadow-xl border-[3px] border-slate-800">
+                <div class="w-1 h-8 bg-slate-800 rounded-l-md absolute -left-[5px] top-24"></div>
+                <div class="w-1 h-10 bg-slate-800 rounded-l-md absolute -left-[5px] top-36"></div>
+                <div class="w-1 h-12 bg-slate-800 rounded-r-md absolute -right-[5px] top-32"></div>
+                <div class="bg-[#F8FAFC] rounded-[2.5rem] overflow-hidden aspect-[9/19.5] flex items-center justify-center relative">
+                  <img src="Profile.png" alt="Prototype Screen 12" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80'">
+                </div>
+              </div>
+            </div>
+            <span class="mt-4 font-bold text-sm text-ocean-900">12. Profile / Settings</span>
+          </div>
+        </div>
+
+        <!-- QR Code Showcase Block -->
+        <div class="mt-16 bg-gradient-to-r from-ocean-900 via-ocean-800 to-emeraldLeaf-900 text-white rounded-3xl p-8 shadow-xl flex flex-col md:flex-row items-center justify-between gap-8 border border-ocean-700">
+          <div class="space-y-3 text-center md:text-left max-w-xl">
+            <span class="bg-emeraldLeaf-500/20 text-emeraldLeaf-300 text-xs uppercase px-3 py-1 rounded-full font-bold tracking-wider border border-emeraldLeaf-500/30">Mobile Prototype Test</span>
+            <h3 class="text-2xl sm:text-3xl font-extrabold text-white">Try our Prototype on Your Phone!</h3>
+            <p class="text-ocean-100 text-sm leading-relaxed">
+              Scan the QR code with your mobile camera to test the WellNest digital assistant interface directly on your mobile device.
+            </p>
+          </div>
+          <div class="bg-white p-4 rounded-2xl shadow-2xl flex flex-col items-center shrink-0">
+            <div id="prototype-qr-code" class="w-32 h-32 bg-white flex items-center justify-center rounded-lg overflow-hidden">
+              <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https%3A%2F%2Fwww.figma.com%2Fproto%2FRYZVviwIngJfqsrvH0ZrQc%2FWELLNEST%3Fnode-id%3D4-2%26t%3Dm96JMIUyM5AwyyxD-1%26scaling%3Dmin-zoom%26content-scaling%3Dfixed%26page-id%3D0%253A1%26starting-point-node-id%3D4%253A2%26show-proto-sidebar%3D1" alt="WellNest Figma Prototype QR Code" class="w-full h-full object-contain">
+            </div>
+            <span class="text-[11px] font-bold text-ocean-900 mt-2">Scan QR Code</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURES SECTION (8 Key Features) -->
+    <section id="features" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <span class="text-xs font-bold text-ocean-700 tracking-wider uppercase bg-ocean-100 px-3.5 py-1 rounded-full border border-ocean-200">System Capabilities</span>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-ocean-900 mt-4 tracking-tight">8 Key Features Designed for You</h2>
+        <p class="mt-4 text-slate-600 text-base sm:text-lg">Everything you need to keep your daily health routine organized, clear, and stress-free.</p>
+      </div>
+
+      <!-- 8 Key Features Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Feature 1 -->
+        <div class="bg-white rounded-3xl p-6 border border-ocean-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+          <div class="w-12 h-12 rounded-2xl bg-ocean-50 text-ocean-600 flex items-center justify-center mb-4 font-bold text-lg">1</div>
+          <h3 class="text-lg font-bold text-ocean-900 mb-2">Wellness Dashboard</h3>
+          <p class="text-slate-600 text-xs leading-relaxed">Everything in one place—view your tasks, hydration, and wellness routines in a unified view.</p>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="bg-white rounded-3xl p-6 border border-emeraldLeaf-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+          <div class="w-12 h-12 rounded-2xl bg-emeraldLeaf-50 text-emeraldLeaf-600 flex items-center justify-center mb-4 font-bold text-lg">2</div>
+          <h3 class="text-lg font-bold text-ocean-900 mb-2">Health Reminders</h3>
+          <p class="text-slate-600 text-xs leading-relaxed">Get timely alerts for daily activities, medication schedules, and hydration routines.</p>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="bg-white rounded-3xl p-6 border border-ocean-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+          <div class="w-12 h-12 rounded-2xl bg-ocean-50 text-ocean-600 flex items-center justify-center mb-4 font-bold text-lg">3</div>
+          <h3 class="text-lg font-bold text-ocean-900 mb-2">Appointment Organization</h3>
+          <p class="text-slate-600 text-xs leading-relaxed">Seamlessly manage and receive notifications for upcoming clinic visits and check-ups.</p>
+        </div>
+
+        <!-- Feature 4 -->
+        <div class="bg-white rounded-3xl p-6 border border-emeraldLeaf-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+          <div class="w-12 h-12 rounded-2xl bg-emeraldLeaf-50 text-emeraldLeaf-600 flex items-center justify-center mb-4 font-bold text-lg">4</div>
+          <h3 class="text-lg font-bold text-ocean-900 mb-2">Health Information Hub</h3>
+          <p class="text-slate-600 text-xs leading-relaxed">Access reliable, easy-to-read educational materials curated from trustworthy sources.</p>
+        </div>
+
+        <!-- Feature 5 -->
+        <div class="bg-white rounded-3xl p-6 border border-emeraldLeaf-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+          <div class="w-12 h-12 rounded-2xl bg-emeraldLeaf-50 text-emeraldLeaf-600 flex items-center justify-center mb-4 font-bold text-lg">5</div>
+          <h3 class="text-lg font-bold text-ocean-900 mb-2">Wellness Goals</h3>
+          <p class="text-slate-600 text-xs leading-relaxed">Set personal benchmarks for physical activity, daylight exposure, and sleep optimization.</p>
+        </div>
+
+        <!-- Feature 6 -->
+        <div class="bg-white rounded-3xl p-6 border border-ocean-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+          <div class="w-12 h-12 rounded-2xl bg-ocean-50 text-ocean-600 flex items-center justify-center mb-4 font-bold text-lg">6</div>
+          <h3 class="text-lg font-bold text-ocean-900 mb-2">Progress Tracker</h3>
+          <p class="text-slate-600 text-xs leading-relaxed">Visualize your complete wellness history and monthly streak trends effortlessly.</p>
+        </div>
+
+        <!-- Feature 7 -->
+        <div class="bg-white rounded-3xl p-6 border border-emeraldLeaf-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+          <div class="w-12 h-12 rounded-2xl bg-emeraldLeaf-50 text-emeraldLeaf-600 flex items-center justify-center mb-4 font-bold text-lg">7</div>
+          <h3 class="text-lg font-bold text-ocean-900 mb-2">School Wellness Dashboards</h3>
+          <p class="text-slate-600 text-xs leading-relaxed">Empower campuses with health campaigns, wellness drives, and educational content.</p>
+        </div>
+
+        <!-- Feature 8 -->
+        <div class="bg-white rounded-3xl p-6 border border-ocean-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+          <div class="w-12 h-12 rounded-2xl bg-ocean-50 text-ocean-600 flex items-center justify-center mb-4 font-bold text-lg">8</div>
+          <h3 class="text-lg font-bold text-ocean-900 mb-2">Important Health Contacts</h3>
+          <p class="text-slate-600 text-xs leading-relaxed">Quickly store and access emergency numbers, family doctors, and clinic hotlines.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT US SECTION -->
+    <section id="about" class="py-20 bg-ocean-50/70 border-t border-ocean-100">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-3xl mx-auto mb-16">
+          <span class="text-xs font-bold text-ocean-700 tracking-wider uppercase bg-ocean-100 px-3.5 py-1 rounded-full border border-ocean-200">Our Story & Mission</span>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-ocean-900 mt-3">About Us & Background</h2>
+          <p class="text-slate-600 mt-2 text-base">Startup background, mission, vision, objectives, and team members behind WellNest.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+          <div class="bg-white rounded-3xl p-8 border border-red-100 shadow-sm">
+            <div class="w-12 h-12 rounded-2xl bg-red-50 text-red-600 flex items-center justify-center mb-4">
+              <i data-lucide="alert-circle" class="w-6 h-6"></i>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900 mb-3">The Problem</h3>
+            <p class="text-slate-600 text-sm leading-relaxed">
+              Many students and busy people forget appointments, medications, and daily wellness tasks. Health records and reliable health information are hard to organize and access when needed most.
+            </p>
+          </div>
+
+          <div class="bg-white rounded-3xl p-8 border border-emeraldLeaf-100 shadow-sm">
+            <div class="w-12 h-12 rounded-2xl bg-emeraldLeaf-50 text-emeraldLeaf-600 flex items-center justify-center mb-4">
+              <i data-lucide="shield-check" class="w-6 h-6"></i>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900 mb-3">The WellNest Solution</h3>
+            <p class="text-slate-600 text-sm leading-relaxed">
+              WellNest provides a simple digital platform for organizing health activities, receiving reliable reminders, and learning from certified health sources in one intuitive sanctuary.
+            </p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+          <div class="bg-white rounded-3xl p-8 border border-ocean-100 shadow-sm">
+            <div class="w-12 h-12 rounded-2xl bg-ocean-50 text-ocean-600 flex items-center justify-center mb-4 font-bold text-lg">M</div>
+            <h3 class="text-xl font-bold text-ocean-900 mb-2">Our Mission</h3>
+            <p class="text-slate-600 text-xs leading-relaxed">To empower students and communities with accessible, streamlined health routine management aligned with global wellness standards.</p>
+          </div>
+
+          <div class="bg-white rounded-3xl p-8 border border-ocean-100 shadow-sm">
+            <div class="w-12 h-12 rounded-2xl bg-emeraldLeaf-50 text-emeraldLeaf-600 flex items-center justify-center mb-4 font-bold text-lg">V</div>
+            <h3 class="text-xl font-bold text-ocean-900 mb-2">Our Vision</h3>
+            <p class="text-slate-600 text-xs leading-relaxed">To become the leading regional digital health companion fostering proactive wellness habits and stress-free routine tracking.</p>
+          </div>
+
+          <div class="bg-white rounded-3xl p-8 border border-ocean-100 shadow-sm">
+            <div class="w-12 h-12 rounded-2xl bg-ocean-50 text-ocean-600 flex items-center justify-center mb-4 font-bold text-lg">O</div>
+            <h3 class="text-xl font-bold text-ocean-900 mb-2">Key Objectives</h3>
+            <p class="text-slate-600 text-xs leading-relaxed">Deliver intuitive reminder tools, reliable educational hubs, and school wellness campaign partnerships across Panabo City.</p>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-3xl p-8 border border-ocean-100 shadow-md">
+          <div class="text-center max-w-2xl mx-auto mb-10">
+            <span class="text-xs font-bold text-emeraldLeaf-700 uppercase tracking-wider bg-emeraldLeaf-50 px-3 py-1 rounded-full border border-emeraldLeaf-200">Our Team</span>
+            <h3 class="text-2xl sm:text-3xl font-extrabold text-ocean-900 mt-2">Meet the WellNest Team</h3>
+            <p class="text-xs text-slate-500 mt-1">Dedicated minds building better health habits for our community.</p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="flex flex-col items-center text-center p-6 rounded-2xl bg-ocean-50/40 border border-ocean-100">
+              <div class="w-32 h-32 rounded-full overflow-hidden border-4 border-white shadow-lg bg-ocean-100 mb-4 flex items-center justify-center">
+                <img src="joeren.jpg" alt="Joeren Pollenza" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <span class="hidden text-ocean-700 font-extrabold text-2xl">JP</span>
+              </div>
+              <h4 class="font-extrabold text-lg text-ocean-900">Joeren Pollenza</h4>
+              <span class="text-xs font-bold text-emeraldLeaf-600 uppercase tracking-wider mt-0.5">Founder & Project Lead</span>
+              <p class="text-xs text-slate-500 mt-2 leading-relaxed">Leads product vision, community outreach, and SDG 3 health alignment.</p>
+            </div>
+
+            <div class="flex flex-col items-center text-center p-6 rounded-2xl bg-ocean-50/40 border border-ocean-100">
+              <div class="w-32 h-32 rounded-full overflow-hidden border-4 border-white shadow-lg bg-emeraldLeaf-100 mb-4 flex items-center justify-center">
+                <img src="Aaron.png" alt="Aaron Kim S. Añover" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <span class="hidden text-emeraldLeaf-700 font-extrabold text-2xl">AA</span>
+              </div>
+              <h4 class="font-extrabold text-lg text-ocean-900">Aaron Kim S. Añover</h4>
+              <span class="text-xs font-bold text-ocean-600 uppercase tracking-wider mt-0.5">UI/UX & Prototype Designer</span>
+              <p class="text-xs text-slate-500 mt-2 leading-relaxed">Designs intuitive routine dashboards, mobile prototypes, and user flows.</p>
+            </div>
+
+            <div class="flex flex-col items-center text-center p-6 rounded-2xl bg-ocean-50/40 border border-ocean-100">
+              <div class="w-32 h-32 rounded-full overflow-hidden border-4 border-white shadow-lg bg-ocean-100 mb-4 flex items-center justify-center">
+                <img src="Ervinn.png" alt="Ervin Kent Domen" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <span class="hidden text-ocean-700 font-extrabold text-2xl">ED</span>
+              </div>
+              <h4 class="font-extrabold text-lg text-ocean-900">Ervin Kent Domen</h4>
+              <span class="text-xs font-bold text-emeraldLeaf-600 uppercase tracking-wider mt-0.5">Developer & Health Researcher</span>
+              <p class="text-xs text-slate-500 mt-2 leading-relaxed">Builds web functionality and curates verified health education materials.</p>
+            </div>
+          </div>
+
+          <div class="mt-8 pt-6 border-t border-slate-100 text-center">
+            <p class="text-xs text-slate-500 italic max-w-2xl mx-auto">
+              <strong>Disclaimer:</strong> WellNest supports health organization and education. It does not diagnose diseases or replace professional advice from registered doctors.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT US SECTION -->
+    <section id="contact" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-white rounded-3xl shadow-xl max-w-4xl mx-auto p-8 sm:p-12 border border-ocean-100">
+        <div class="text-center space-y-4 mb-10">
+          <span class="text-xs font-bold text-ocean-700 tracking-wider uppercase bg-ocean-100 px-3.5 py-1 rounded-full border border-ocean-200">Get in Touch</span>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-ocean-900 tracking-tight">Contact WellNest</h2>
+          <p class="text-slate-600 text-sm leading-relaxed max-w-xl mx-auto">
+            Have questions about our prototype, partnership opportunities, or school wellness campaigns? Reach out to our team directly through our contact details or visit our Facebook page below.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="flex flex-col items-center text-center p-5 rounded-2xl bg-ocean-50/50 border border-ocean-100 shadow-sm hover:border-ocean-300 transition-all">
+            <div class="w-12 h-12 rounded-2xl bg-ocean-100 text-ocean-600 flex items-center justify-center mb-3">
+              <i data-lucide="mail" class="w-6 h-6"></i>
+            </div>
+            <div class="text-xs text-slate-500 font-medium mb-1">Email Us</div>
+            <a href="mailto:wellnest2026@gmail.com" class="text-xs font-bold text-ocean-900 hover:text-ocean-600 break-all">wellnest2026@gmail.com</a>
+          </div>
+
+          <div class="flex flex-col items-center text-center p-5 rounded-2xl bg-ocean-50/50 border border-ocean-100 shadow-sm hover:border-ocean-300 transition-all">
+            <div class="w-12 h-12 rounded-2xl bg-emeraldLeaf-50 text-emeraldLeaf-600 flex items-center justify-center mb-3">
+              <i data-lucide="phone" class="w-6 h-6"></i>
+            </div>
+            <div class="text-xs text-slate-500 font-medium mb-1">Contact Number</div>
+            <a href="tel:+639164230825" class="text-xs font-bold text-ocean-900 hover:text-ocean-600">+63 916 423 0825</a>
+          </div>
+
+          <div class="flex flex-col items-center text-center p-5 rounded-2xl bg-ocean-50/50 border border-ocean-100 shadow-sm hover:border-ocean-300 transition-all">
+            <div class="w-12 h-12 rounded-2xl bg-ocean-100 text-ocean-600 flex items-center justify-center mb-3">
+              <i data-lucide="map-pin" class="w-6 h-6"></i>
+            </div>
+            <div class="text-xs text-slate-500 font-medium mb-1">Location / HQ</div>
+            <span class="text-xs font-bold text-ocean-900">Panabo City, Philippines</span>
+          </div>
+
+          <a href="https://www.facebook.com/profile.php?id=61596447152680" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center text-center p-5 rounded-2xl bg-blue-50/50 border border-blue-100 shadow-sm hover:border-blue-300 transition-all group">
+            <div class="w-12 h-12 rounded-2xl bg-[#1877F2] text-white flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
+              <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            </div>
+            <div class="text-xs text-slate-500 font-medium mb-1">Social Page</div>
+            <span class="text-xs font-bold text-[#1877F2] underline">Visit Facebook &rarr;</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-ocean-950 text-ocean-200 border-t border-ocean-900 py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-ocean-500 to-emeraldLeaf-500 flex items-center justify-center text-white">
+            <i data-lucide="heart" class="w-4 h-4"></i>
+          </div>
+          <span class="font-bold text-xl tracking-tight text-white">Well<span class="text-emeraldLeaf-400">Nest</span></span>
+        </div>
+        <p class="text-xs text-ocean-300 text-center">
+          &copy; WellNest: Your Health Routine, Organized.
+        </p>
+        <div class="flex flex-wrap justify-center items-center gap-4 text-xs">
+          <a href="#home" class="hover:text-white transition-colors">Home</a>
+          <a href="#promo-video" class="hover:text-white transition-colors">Promotional Video</a>
+          <a href="#prototype" class="hover:text-white transition-colors">Our Prototype</a>
+          <a href="#features" class="hover:text-white transition-colors">Features</a>
+          <a href="#about" class="hover:text-white transition-colors">About Us</a>
+          <a href="#contact" class="hover:text-white transition-colors">Contact Us</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- CONSULTATION / TRIAL MODAL -->
+  <div id="consultation-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-ocean-950/80 backdrop-blur-sm hidden transition-opacity">
+    <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl relative border border-ocean-100">
+      <button onclick="closeModal('consultation-modal')" class="absolute top-5 right-5 text-slate-400 hover:text-ocean-900">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+      <div class="text-center mb-6">
+        <div class="w-12 h-12 bg-gradient-to-br from-ocean-500 to-emeraldLeaf-500 text-white rounded-2xl flex items-center justify-center mx-auto mb-3 shadow">
+          <i data-lucide="sparkles" class="w-6 h-6"></i>
+        </div>
+        <h3 class="text-2xl font-extrabold text-ocean-900">Get Started with WellNest</h3>
+        <p class="text-xs text-slate-500 mt-1">Join our trial user list or student pilot program.</p>
+      </div>
+      <form onsubmit="handleConsultationSubmit(event)" class="space-y-4">
+        <div>
+          <label class="block text-xs font-bold text-ocean-900 mb-1">Full Name</label>
+          <input type="text" required placeholder="Alex Cruz" class="w-full bg-ocean-50/50 border border-ocean-200 rounded-xl px-3.5 py-2.5 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-ocean-500">
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-ocean-900 mb-1">Email Address</label>
+          <input type="email" required placeholder="alex@example.com" class="w-full bg-ocean-50/50 border border-ocean-200 rounded-xl px-3.5 py-2.5 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-ocean-500">
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-ocean-900 mb-1">Primary Role</label>
+          <select class="w-full bg-ocean-50/50 border border-ocean-200 rounded-xl px-3.5 py-2.5 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-ocean-500">
+            <option>Student</option>
+            <option>Busy Professional / Young Adult</option>
+            <option>School Representative</option>
+            <option>Community Partner</option>
+          </select>
+        </div>
+        <button type="submit" class="w-full bg-gradient-to-r from-ocean-600 to-emeraldLeaf-600 hover:from-ocean-700 hover:to-emeraldLeaf-700 text-white font-bold py-3.5 rounded-xl shadow transition-colors text-sm">
+          Register for Free Trial
+        </button>
+      </form>
+      <div id="modal-toast" class="mt-4 p-3 bg-emeraldLeaf-50 border border-emeraldLeaf-200 text-emeraldLeaf-800 text-xs rounded-xl text-center hidden font-bold">
+        &#10003; Registration Received! Welcome to the WellNest community.
+      </div>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT LOGIC -->
+  <script>
+    lucide.createIcons();
+
+    document.getElementById('mobile-menu-btn').addEventListener('click', toggleMobileMenu);
+
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobile-menu');
+      menu.classList.toggle('hidden');
+    }
+
+    function openModal(id) {
+      document.getElementById(id).classList.remove('hidden');
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).classList.add('hidden');
+      const toast = document.getElementById('modal-toast');
+      if (toast) toast.classList.add('hidden');
+    }
+
+    function handleConsultationSubmit(e) {
+      e.preventDefault();
+      const toast = document.getElementById('modal-toast');
+      toast.classList.remove('hidden');
+      setTimeout(() => {
+        closeModal('consultation-modal');
+      }, 2200);
+    }
+
+    function setCurrentDate() {
+      const options = { weekday: 'long', month: 'short', day: 'numeric' };
+      const today = new Date().toLocaleDateString('en-US', options);
+      const dateEl = document.getElementById('current-date-text');
+      if (dateEl) dateEl.innerText = today;
+    }
+
+    // Video Mute/Unmute Toggle & Autoplay Enforcement
+    function toggleMuteVideo() {
+      const video = document.getElementById('wellnest-promo-player');
+      const text = document.getElementById('volume-text');
+      if (video.muted) {
+        video.muted = false;
+        text.innerText = 'Mute Video';
+      } else {
+        video.muted = true;
+        text.innerText = 'Click to Unmute';
+      }
+    }
+
+    window.onload = function () {
+      setCurrentDate();
+      const promoVideo = document.getElementById('wellnest-promo-player');
+      if (promoVideo) {
+        promoVideo.play().catch(err => {
+          console.log('Autoplay prevented by browser policy until interaction:', err);
+        });
+      }
+    };
+  </script>
+</body>
+</html>
